@@ -6,7 +6,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
+  
+  @override
+  void initState() {
+    super.initState();
+  }
+  
   int _currentBottomNavigationIndex = 0;
   final List<Widget> _bottomNavigationPages = [
     Center(child: Text('Page1'),),
