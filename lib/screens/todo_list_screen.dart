@@ -1,5 +1,8 @@
+import 'package:easy_notes/models/todo_model.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
+import '../widgets/todo_item.dart';
 
 class TodoListScreen extends StatelessWidget {
   @override
@@ -13,7 +16,10 @@ class TodoListScreen extends StatelessWidget {
           return ListView.builder(
             itemCount: todoDocuments.length,
             itemBuilder: (ctx, index) {
-              return Text(todoDocuments[index]["name"]);
+              return TodoItem(
+                todoId: todoDocuments[index]["id"],
+                todoTitle: todoDocuments[index]["name"]
+                );
             },
           );
         },

@@ -12,7 +12,7 @@ class _AddTodoItemModalState extends State<AddTodoItemModal> {
   void _addTodoItem() async {
     await Firestore.instance.collection('todos').document(DateTime.now().toString()).setData({
       "name": _todoNameController.text,
-      "date": DateTime.now().toIso8601String(),
+      "id": DateTime.now().toIso8601String(),
     });
 
     Navigator.pop(context);
