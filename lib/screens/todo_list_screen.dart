@@ -1,4 +1,3 @@
-import 'package:easy_notes/models/todo_model.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -12,6 +11,9 @@ class TodoListScreen extends StatelessWidget {
       child: StreamBuilder(
         stream: Firestore.instance.collection('todos').snapshots(),
         builder: (ctx, todoItemsSnapshot) {
+          if (todoItemsSnapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator(),);
+          } 
           var todoDocuments = todoItemsSnapshot.data.documents;
           return ListView.builder(
             itemCount: todoDocuments.length,

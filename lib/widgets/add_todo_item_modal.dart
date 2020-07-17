@@ -28,7 +28,7 @@ class _AddTodoItemModalState extends State<AddTodoItemModal> {
           Text("Add a new todo task",
           textAlign: TextAlign.center,
           style: TextStyle(
-            fontSize: 22,
+            fontSize: 24,
           ),
           ),
           SizedBox(height: 20,),
