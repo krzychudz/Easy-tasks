@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
+import '../repositories/todo_repository.dart' as TodoTaskRepository;
+
 class AddTodoItemModal extends StatefulWidget {
   @override
   _AddTodoItemModalState createState() => _AddTodoItemModalState();
@@ -9,10 +11,10 @@ class AddTodoItemModal extends StatefulWidget {
 class _AddTodoItemModalState extends State<AddTodoItemModal> {
   TextEditingController _todoNameController = TextEditingController();
 
-  void _addTodoItem() async {
-    await Firestore.instance.collection('todos').document(DateTime.now().toString()).setData({
+  Future<void> _addTodoItem() async {
+    await TodoTaskRepository.pushTodoTaskToFirestore({
+      "id": DateTime.now().toString(),
       "name": _todoNameController.text,
-      "id": DateTime.now().toIso8601String(),
     });
 
     Navigator.pop(context);
@@ -25,24 +27,30 @@ class _AddTodoItemModalState extends State<AddTodoItemModal> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Text("Add a new todo task",
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            fontSize: 24,
+          Text(
+            "Add a new todo task",
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: 24,
+            ),
           ),
+          SizedBox(
+            height: 20,
           ),
-          SizedBox(height: 20,),
           TextField(
             decoration: InputDecoration(
               hintText: 'Enter a title',
             ),
             controller: _todoNameController,
           ),
-          SizedBox(height: 20,),
+          SizedBox(
+            height: 20,
+          ),
           FlatButton(
             color: Theme.of(context).primaryColor,
             textColor: Theme.of(context).primaryTextTheme.headline1.color,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16.0)),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0)),
             child: Text("Add item"),
             onPressed: _addTodoItem,
           )

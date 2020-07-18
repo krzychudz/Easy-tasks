@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../repositories/todo_repository.dart' as TodoTaskRepository;
+
 class TodoItem extends StatelessWidget {
   final String todoTitle;
   final String todoId;
@@ -44,7 +46,7 @@ class TodoItem extends StatelessWidget {
       confirmDismiss: (dismissDirection) async {
         return await showDeleteConfirmationDialog(context);
       },
-      onDismissed: (direction) {},
+      onDismissed: (direction) => TodoTaskRepository.removeTodoTask(todoId),
       child: Card(
         elevation: 5,
         child: Padding(

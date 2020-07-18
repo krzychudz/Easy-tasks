@@ -12,16 +12,23 @@ class TodoListScreen extends StatelessWidget {
         stream: Firestore.instance.collection('todos').snapshots(),
         builder: (ctx, todoItemsSnapshot) {
           if (todoItemsSnapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator(),);
-          } 
+            return Center(
+              child: CircularProgressIndicator(),
+            );
+          }
           var todoDocuments = todoItemsSnapshot.data.documents;
+          if (todoDocuments.length == 0) {
+            return Center(
+              child: Text(
+                  "You have no todo task. To add one click on the + button."),
+            );
+          }
           return ListView.builder(
             itemCount: todoDocuments.length,
             itemBuilder: (ctx, index) {
               return TodoItem(
-                todoId: todoDocuments[index]["id"],
-                todoTitle: todoDocuments[index]["name"]
-                );
+                  todoId: todoDocuments[index]["id"],
+                  todoTitle: todoDocuments[index]["name"]);
             },
           );
         },
