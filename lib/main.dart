@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'Vin Decoder',
       theme: ThemeData(
         primarySwatch: Colors.purple,
+        accentColor: Colors.amber,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       initialRoute: '/',

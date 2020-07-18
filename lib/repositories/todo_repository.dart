@@ -10,3 +10,11 @@ Future<void> pushTodoTaskToFirestore(Map<String, String> todoTask) async {
 Future<void> removeTodoTask(String taskId) async {
   return await Firestore.instance.collection('todos').document(taskId).delete();
 }
+
+Future<void> editTodoTask(Map<String, String> taskDataToEdit) async {
+  var taskId = taskDataToEdit["id"];
+  return await Firestore.instance
+      .collection('todos')
+      .document(taskId)
+      .updateData(taskDataToEdit);
+}

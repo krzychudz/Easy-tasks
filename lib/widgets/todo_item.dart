@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../repositories/todo_repository.dart' as TodoTaskRepository;
+import './add_todo_item_modal.dart';
 
 class TodoItem extends StatelessWidget {
   final String todoTitle;
@@ -30,6 +31,16 @@ class TodoItem extends StatelessWidget {
         });
   }
 
+  void showEditBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (bCtx) => AddTodoItemModal(
+        taskId: todoId,
+        taskName: todoTitle,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Dismissible(
@@ -57,7 +68,7 @@ class TodoItem extends StatelessWidget {
               Text(todoTitle),
               IconButton(
                 icon: Icon(Icons.edit),
-                onPressed: () {},
+                onPressed: () => showEditBottomSheet(context),
               ),
             ],
           ),
