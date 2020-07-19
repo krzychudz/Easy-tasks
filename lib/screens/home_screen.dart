@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../screens/todo_list_screen.dart';
 
-import '../widgets/add_todo_item_modal.dart';
+import '../widgets/todo_item_mange_model.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _showBottomModalSheet(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
-      builder: (bCtx) => AddTodoItemModal(),
+      builder: (bCtx) => MangeTodoItemModal(),
     );
   }
 

@@ -2,20 +2,20 @@ import 'package:flutter/material.dart';
 
 import '../repositories/todo_repository.dart' as TodoTaskRepository;
 
-class AddTodoItemModal extends StatefulWidget {
+class MangeTodoItemModal extends StatefulWidget {
   final String taskName;
   final String taskId;
 
-  AddTodoItemModal({
+  MangeTodoItemModal({
     this.taskName = "",
     this.taskId = "",
   });
 
   @override
-  _AddTodoItemModalState createState() => _AddTodoItemModalState();
+  _MangeTodoItemModalState createState() => _MangeTodoItemModalState();
 }
 
-class _AddTodoItemModalState extends State<AddTodoItemModal> {
+class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
   TextEditingController _todoNameController = TextEditingController();
   var _isEditMode = false;
 

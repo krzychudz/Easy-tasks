@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../repositories/todo_repository.dart' as TodoTaskRepository;
-import './add_todo_item_modal.dart';
+import 'todo_item_mange_model.dart';
 
 class TodoItem extends StatelessWidget {
   final String todoTitle;
@@ -34,7 +34,7 @@ class TodoItem extends StatelessWidget {
   void showEditBottomSheet(BuildContext context) {
     showModalBottomSheet(
       context: context,
-      builder: (bCtx) => AddTodoItemModal(
+      builder: (bCtx) => MangeTodoItemModal(
         taskId: todoId,
         taskName: todoTitle,
       ),
