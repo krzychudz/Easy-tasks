@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../repositories/todo_repository.dart' as TodoTaskRepository;
-import 'todo_item_mange_model.dart';
+import 'todo_item_mange_modal.dart';
 
 class TodoItem extends StatelessWidget {
   final String todoTitle;

@@ -1,22 +1,22 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-String collectionName = "todos";
+String collectionName = "notes";
 
-Future<void> pushTodoTaskToFirestore(Map<String, String> todoTask) async {
+Future<void> pushNoteToFirestore(Map<String, String> todoTask) async {
   return await Firestore.instance
       .collection(collectionName)
       .document(todoTask["id"])
       .setData(todoTask);
 }
 
-Future<void> removeTodoTask(String taskId) async {
+Future<void> removeNote(String taskId) async {
   return await Firestore.instance
       .collection(collectionName)
       .document(taskId)
       .delete();
 }
 
-Future<void> editTodoTask(Map<String, String> taskDataToEdit) async {
+Future<void> editNote(Map<String, String> taskDataToEdit) async {
   var taskId = taskDataToEdit["id"];
   return await Firestore.instance
       .collection(collectionName)

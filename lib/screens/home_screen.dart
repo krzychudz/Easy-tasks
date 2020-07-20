@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 
 import '../screens/todo_list_screen.dart';
+import '../screens/notes_list_screen.dart';
 
-import '../widgets/todo_item_mange_model.dart';
+import '../widgets/todo_item_mange_modal.dart';
+import '../widgets/notes_item_manage_modal.dart';
 
 class HomeScreen extends StatefulWidget {
   @override
@@ -20,9 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _bottomNavigationPages = [
     TodoListScreen(),
-    Center(
-      child: Text('Page2'),
-    ),
+    NotesListScreen(),
   ];
 
   void _onBottomNavigationTapped(int index) {
@@ -46,7 +46,9 @@ class _HomeScreenState extends State<HomeScreen> {
   void _showBottomModalSheet(BuildContext ctx) {
     showModalBottomSheet(
       context: ctx,
-      builder: (bCtx) => MangeTodoItemModal(),
+      builder: (bCtx) => _currentBottomNavigationIndex == 0
+          ? MangeTodoItemModal()
+          : ManageNoteItemModal(),
     );
   }
 
