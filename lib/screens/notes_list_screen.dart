@@ -1,7 +1,6 @@
+import 'package:easy_notes/widgets/note_item.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-
-import '../widgets/todo_item.dart';
 
 class NotesListScreen extends StatelessWidget {
   @override
@@ -26,9 +25,11 @@ class NotesListScreen extends StatelessWidget {
           return ListView.builder(
             itemCount: noteDocuments.length,
             itemBuilder: (ctx, index) {
-              return TodoItem(
-                  todoId: noteDocuments[index]["id"],
-                  todoTitle: noteDocuments[index]["name"]);
+              return NoteItem(
+                noteId: noteDocuments[index]["id"],
+                noteTitle: noteDocuments[index]["name"],
+                noteDescription: noteDocuments[index]['description'],
+              );
             },
           );
         },

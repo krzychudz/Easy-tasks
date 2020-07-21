@@ -43,6 +43,18 @@ class _ManageNoteItemModalState extends State<ManageNoteItemModal> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _isEditMode = widget.noteTite.isNotEmpty &&
+        widget.noteId.isNotEmpty &&
+        widget.noteDescription.isNotEmpty;
+    if (_isEditMode) {
+      _titleTextController.text = widget.noteTite;
+      _descriptionTextController.text = widget.noteDescription;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 48.0, horizontal: 32.0),
