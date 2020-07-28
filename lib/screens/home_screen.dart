@@ -1,3 +1,4 @@
+import 'package:easy_notes/widgets/picker/color_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../screens/todo_list_screen.dart';
@@ -78,6 +79,10 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(icon: Icon(Icons.note), title: Text('Notes'))
         ],
       ),
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        showDialog(context: context, child: ColorPicker())
+            .then((value) => print(value));
+      }),
     );
   }
 }
