@@ -8,8 +8,13 @@ import '../widgets/delete_confirmation_dialog.dart' as DialogHelper;
 class TodoItem extends StatelessWidget {
   final String todoTitle;
   final String todoId;
+  final Color backgroundColor;
 
-  TodoItem({this.todoId, this.todoTitle});
+  TodoItem({
+    this.todoId,
+    this.todoTitle,
+    this.backgroundColor,
+  });
 
   void showEditBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -39,6 +44,7 @@ class TodoItem extends StatelessWidget {
       },
       onDismissed: (direction) => TodoTaskRepository.removeTodoTask(todoId),
       child: Card(
+        color: backgroundColor,
         elevation: 5,
         child: Padding(
           padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),

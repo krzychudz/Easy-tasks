@@ -2,7 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 String collectionName = "todos";
 
-Future<void> pushTodoTaskToFirestore(Map<String, String> todoTask) async {
+Future<void> pushTodoTaskToFirestore(Map<String, dynamic> todoTask) async {
   return await Firestore.instance
       .collection(collectionName)
       .document(todoTask["id"])

@@ -26,9 +26,18 @@ class TodoListScreen extends StatelessWidget {
           return ListView.builder(
             itemCount: todoDocuments.length,
             itemBuilder: (ctx, index) {
+              var backendColorsList = todoDocuments[index]["backgroundColor"];
+              var backgroundColorARGB = Color.fromARGB(
+                backendColorsList[0],
+                backendColorsList[1],
+                backendColorsList[2],
+                backendColorsList[3],
+              );
               return TodoItem(
-                  todoId: todoDocuments[index]["id"],
-                  todoTitle: todoDocuments[index]["name"]);
+                todoId: todoDocuments[index]["id"],
+                todoTitle: todoDocuments[index]["name"],
+                backgroundColor: backgroundColorARGB,
+              );
             },
           );
         },

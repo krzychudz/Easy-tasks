@@ -79,10 +79,6 @@ class _HomeScreenState extends State<HomeScreen> {
           BottomNavigationBarItem(icon: Icon(Icons.note), title: Text('Notes'))
         ],
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        showDialog(context: context, child: ColorPicker())
-            .then((value) => print(value));
-      }),
     );
   }
 }

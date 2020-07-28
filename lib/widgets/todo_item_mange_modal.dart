@@ -1,3 +1,4 @@
+import 'package:easy_notes/widgets/picker/color_picker.dart';
 import 'package:flutter/material.dart';
 
 import '../repositories/todo_repository.dart' as TodoTaskRepository;
@@ -18,11 +19,18 @@ class MangeTodoItemModal extends StatefulWidget {
 class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
   TextEditingController _todoNameController = TextEditingController();
   var _isEditMode = false;
+  var _selectedColorARGB = Color(0);
 
   Future<void> _addTodoItem() async {
     await TodoTaskRepository.pushTodoTaskToFirestore({
       "id": DateTime.now().toString(),
       "name": _todoNameController.text,
+      "backgroundColor": [
+        _selectedColorARGB.alpha,
+        _selectedColorARGB.red,
+        _selectedColorARGB.green,
+        _selectedColorARGB.blue,
+      ],
     });
 
     Navigator.pop(context);
@@ -37,6 +45,25 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
     Navigator.pop(context);
   }
 
+  void _showColorPickerDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      child: ColorPicker(),
+    ).then((pickedColor) => {
+          if (pickedColor != null)
+            {
+              setState(() {
+                _selectedColorARGB = Color.fromARGB(
+                  pickedColor.alpha,
+                  pickedColor.red,
+                  pickedColor.green,
+                  pickedColor.blue,
+                );
+              })
+            }
+        });
+  }
+
   @override
   void initState() {
     super.initState();
@@ -44,6 +71,12 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
     if (_isEditMode) {
       _todoNameController.text = widget.taskName;
     }
+  }
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    _selectedColorARGB = Theme.of(context).primaryColor;
   }
 
   @override
@@ -68,6 +101,28 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
               hintText: 'Enter a title',
             ),
             controller: _todoNameController,
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: <Widget>[
+              Text(
+                "Pick a color",
+                style: TextStyle(fontSize: 18),
+              ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.centerRight,
+                  child: GestureDetector(
+                    onTap: () => _showColorPickerDialog(context),
+                    child: CircleAvatar(
+                      backgroundColor: _selectedColorARGB,
+                    ),
+                  ),
+                ),
+              )
+            ],
           ),
           SizedBox(
             height: 20,
