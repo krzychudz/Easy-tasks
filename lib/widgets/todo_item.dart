@@ -22,6 +22,7 @@ class TodoItem extends StatelessWidget {
       builder: (bCtx) => MangeTodoItemModal(
         taskId: todoId,
         taskName: todoTitle,
+        backgroundColor: backgroundColor,
       ),
     );
   }
@@ -51,9 +52,13 @@ class TodoItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(todoTitle),
+              Text(
+                todoTitle,
+                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+              ),
               IconButton(
                 icon: Icon(Icons.edit),
+                color: Colors.white,
                 onPressed: () => showEditBottomSheet(context),
               ),
             ],

@@ -16,7 +16,7 @@ Future<void> removeTodoTask(String taskId) async {
       .delete();
 }
 
-Future<void> editTodoTask(Map<String, String> taskDataToEdit) async {
+Future<void> editTodoTask(Map<String, dynamic> taskDataToEdit) async {
   var taskId = taskDataToEdit["id"];
   return await Firestore.instance
       .collection(collectionName)

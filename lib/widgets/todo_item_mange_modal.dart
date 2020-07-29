@@ -6,10 +6,12 @@ import '../repositories/todo_repository.dart' as TodoTaskRepository;
 class MangeTodoItemModal extends StatefulWidget {
   final String taskName;
   final String taskId;
+  final Color backgroundColor;
 
   MangeTodoItemModal({
     this.taskName = "",
     this.taskId = "",
+    this.backgroundColor,
   });
 
   @override
@@ -37,9 +39,16 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
   }
 
   Future<void> _editTodoItem() async {
+    var selectedColorToList = [
+      _selectedColorARGB.alpha,
+      _selectedColorARGB.red,
+      _selectedColorARGB.green,
+      _selectedColorARGB.blue
+    ];
     await TodoTaskRepository.editTodoTask({
       "id": widget.taskId,
       "name": _todoNameController.text,
+      "backgroundColor": selectedColorToList,
     });
 
     Navigator.pop(context);
@@ -67,6 +76,7 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
   @override
   void initState() {
     super.initState();
+    print(widget.backgroundColor);
     _isEditMode = widget.taskName.isNotEmpty && widget.taskId.isNotEmpty;
     if (_isEditMode) {
       _todoNameController.text = widget.taskName;
@@ -76,7 +86,11 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    _selectedColorARGB = Theme.of(context).primaryColor;
+    if (widget.backgroundColor != null) {
+      _selectedColorARGB = widget.backgroundColor;
+    } else {
+      _selectedColorARGB = Theme.of(context).primaryColor;
+    }
   }
 
   @override
