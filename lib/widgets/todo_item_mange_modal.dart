@@ -33,6 +33,7 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
         _selectedColorARGB.green,
         _selectedColorARGB.blue,
       ],
+      "isDone": false,
     });
 
     Navigator.pop(context);
