@@ -9,12 +9,9 @@ class TodoItem extends StatelessWidget {
   final String todoTitle;
   final String todoId;
   final Color backgroundColor;
+  final bool isDone;
 
-  TodoItem({
-    this.todoId,
-    this.todoTitle,
-    this.backgroundColor,
-  });
+  TodoItem({this.todoId, this.todoTitle, this.backgroundColor, this.isDone});
 
   void showEditBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -24,6 +21,45 @@ class TodoItem extends StatelessWidget {
         taskName: todoTitle,
         backgroundColor: backgroundColor,
       ),
+    );
+  }
+
+  void showConfirmationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      child: AlertDialog(
+        title: const Text(
+            "Are you sure you want to move this task to DONE section?"),
+        actions: <Widget>[
+          FlatButton(
+            child: const Text(
+              "Yes",
+              style: TextStyle(color: Colors.red),
+            ),
+            onPressed: () async {
+              await setItemAsDone();
+              Navigator.of(context).pop();
+            },
+          ),
+          FlatButton(
+            child: const Text(
+              "No",
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  Future<void> setItemAsDone() async {
+    TodoTaskRepository.updateTodoTask(
+      {
+        "id": todoId,
+        "isDone": true,
+      },
     );
   }
 
@@ -48,18 +84,34 @@ class TodoItem extends StatelessWidget {
         color: backgroundColor,
         elevation: 5,
         child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 16.0),
+          padding: const EdgeInsets.symmetric(
+            vertical: 4.0,
+            horizontal: 16.0,
+          ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Text(
                 todoTitle,
-                style: TextStyle(color: Colors.white, fontWeight: FontWeight.w600),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w600,
+                ),
               ),
-              IconButton(
-                icon: Icon(Icons.edit),
-                color: Colors.white,
-                onPressed: () => showEditBottomSheet(context),
+              Row(
+                children: <Widget>[
+                  if (!isDone)
+                    IconButton(
+                      icon: Icon(Icons.done),
+                      color: Colors.white,
+                      onPressed: () => showConfirmationDialog(context),
+                    ),
+                  IconButton(
+                    icon: Icon(Icons.edit),
+                    color: Colors.white,
+                    onPressed: () => showEditBottomSheet(context),
+                  )
+                ],
               ),
             ],
           ),

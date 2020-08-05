@@ -46,7 +46,7 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
       _selectedColorARGB.green,
       _selectedColorARGB.blue
     ];
-    await TodoTaskRepository.editTodoTask({
+    await TodoTaskRepository.updateTodoTask({
       "id": widget.taskId,
       "name": _todoNameController.text,
       "backgroundColor": selectedColorToList,

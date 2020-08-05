@@ -35,6 +35,7 @@ class TodoListScreen extends StatelessWidget {
           todoId: todos[i]["id"],
           todoTitle: todos[i]["name"],
           backgroundColor: backgroundColorARGB,
+          isDone: todos[i]["isDone"],
         ),
       );
     }
