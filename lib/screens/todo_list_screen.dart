@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -15,6 +17,7 @@ class TodoListScreen extends StatefulWidget {
 
 class _TodoListScreenState extends State<TodoListScreen> {
   int percentageOfDone = 0;
+  StreamSubscription todoStreamSubscription;
 
   void _showBottomModalSheet(BuildContext ctx) {
     showModalBottomSheet(
@@ -57,9 +60,15 @@ class _TodoListScreenState extends State<TodoListScreen> {
   @override
   void initState() {
     super.initState();
-    Firestore.instance.collection('todos').snapshots().listen((event) {
+    todoStreamSubscription = Firestore.instance.collection('todos').snapshots().listen((event) {
       recalculatePercentageOfDone(event.documents);
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    todoStreamSubscription.cancel();
   }
 
   @override
