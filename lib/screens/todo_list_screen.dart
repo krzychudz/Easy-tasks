@@ -1,7 +1,8 @@
-import 'package:easy_notes/widgets/task_progress_bar/task_progress_bar.dart';
 import 'package:flutter/material.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_notes/widgets/side_drawer.dart';
+import '../widgets/task_progress_bar/task_progress_bar.dart';
 
 import '../widgets/todo_item_mange_modal.dart';
 
@@ -43,9 +44,21 @@ class _TodoListScreenState extends State<TodoListScreen> {
     );
   }
 
-  Future<void> recalculatePercentageOfDone() async {
+  Future<void> recalculatePercentageOfDone(List<DocumentSnapshot> tasksList) async {
+
+    final numberOfTasks = tasksList.length;
+    final numberOfDone = tasksList.where((element) => element.data['isDone']).length;
+
     setState(() {
-      percentageOfDone = 50;
+      percentageOfDone = numberOfDone * 100 ~/ numberOfTasks;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Firestore.instance.collection('todos').snapshots().listen((event) {
+      recalculatePercentageOfDone(event.documents);
     });
   }
 
@@ -75,7 +88,7 @@ class _TodoListScreenState extends State<TodoListScreen> {
                     .orderBy("isDone")
                     .snapshots(),
                 builder: (ctx, todoItemsSnapshot) {
-                  recalculatePercentageOfDone();
+                  //recalculatePercentageOfDone();
                   return _buildTaskList(todoItemsSnapshot);
                 },
               ),
