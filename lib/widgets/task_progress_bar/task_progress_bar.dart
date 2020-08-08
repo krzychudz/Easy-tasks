@@ -7,15 +7,28 @@ class TaskProgressBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
+    return Container(
+      color: Theme.of(context).primaryColor,
+      padding: const EdgeInsets.symmetric(
+        vertical: 8.0,
+      ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           Flexible(
             child: ProgressIndicator(percentageOfDone),
           ),
-          Text(percentageOfDone.toString() + "%"),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8.0),
+            child: Text(
+              percentageOfDone.toString() + "%",
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -31,10 +44,25 @@ class ProgressIndicator extends StatelessWidget {
   Widget build(BuildContext context) {
     return LayoutBuilder(
       builder: (context, constraints) {
+        final containerWidth = constraints.maxWidth * percentageOfDone / 100;
+        print(containerWidth);
         return Container(
-          width: constraints.maxWidth * percentageOfDone / 100,
-          child: Text(""),
-          color: Colors.red,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(10),
+                bottomRight: Radius.circular(10),
+              ),
+              color: Theme.of(context).accentColor),
+          width: containerWidth,
+          child: Text(
+            "Daily progress",
+            maxLines: 1,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
+            ),
+            textAlign: TextAlign.center,
+          ),
         );
       },
     );

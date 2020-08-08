@@ -45,12 +45,12 @@ class _TodoListScreenState extends State<TodoListScreen> {
   }
 
   Future<void> recalculatePercentageOfDone(List<DocumentSnapshot> tasksList) async {
-
+    print("Recalculate");
     final numberOfTasks = tasksList.length;
     final numberOfDone = tasksList.where((element) => element.data['isDone']).length;
 
     setState(() {
-      percentageOfDone = numberOfDone * 100 ~/ numberOfTasks;
+      percentageOfDone = numberOfTasks == 0 ? 0 : numberOfDone * 100 ~/ numberOfTasks;
     });
   }
 
@@ -81,14 +81,13 @@ class _TodoListScreenState extends State<TodoListScreen> {
         children: <Widget>[
           Expanded(
             child: Padding(
-              padding: const EdgeInsets.all(16.0),
+              padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: StreamBuilder(
                 stream: Firestore.instance
                     .collection('todos')
                     .orderBy("isDone")
                     .snapshots(),
                 builder: (ctx, todoItemsSnapshot) {
-                  //recalculatePercentageOfDone();
                   return _buildTaskList(todoItemsSnapshot);
                 },
               ),
