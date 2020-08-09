@@ -17,7 +17,7 @@ class TodoListScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTaskList(AsyncSnapshot<dynamic> todoItemsSnapshot) {
+  Widget _buildTaskList(AsyncSnapshot<dynamic> todoItemsSnapshot, BuildContext context) {
     if (todoItemsSnapshot.connectionState == ConnectionState.waiting) {
       return Center(
         child: CircularProgressIndicator(),
@@ -30,7 +30,7 @@ class TodoListScreen extends StatelessWidget {
       );
     }
 
-    List<Widget> list = TodoHelper.preapreFinalList(todoDocuments);
+    List<Widget> list = TodoHelper.preapreFinalList(todoDocuments, context);
 
     return ListView.builder(
       itemBuilder: (ctx, index) => list[index],
@@ -57,6 +57,8 @@ class TodoListScreen extends StatelessWidget {
       resizeToAvoidBottomPadding: false,
       drawer: SideDrawer(),
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
         title: Text("Daily Tasks"),
         actions: <Widget>[
           IconButton(
@@ -67,6 +69,7 @@ class TodoListScreen extends StatelessWidget {
           ),
         ],
       ),
+      backgroundColor: Colors.white,
       body: Column(
         children: <Widget>[
           Expanded(
@@ -75,7 +78,7 @@ class TodoListScreen extends StatelessWidget {
               child: StreamBuilder(
                 stream: taskListSnapshot,
                 builder: (ctx, todoItemsSnapshot) {
-                  return _buildTaskList(todoItemsSnapshot);
+                  return _buildTaskList(todoItemsSnapshot, context);
                 },
               ),
             ),

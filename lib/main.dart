@@ -12,8 +12,8 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Easy tasks',
       theme: ThemeData(
-        primarySwatch: Colors.purple,
-        accentColor: Colors.amber,
+        primaryColor: Colors.white,
+        accentColor: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
       initialRoute: '/',

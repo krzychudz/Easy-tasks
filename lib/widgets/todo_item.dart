@@ -29,9 +29,10 @@ class TodoItem extends StatelessWidget {
       context: context,
       child: AlertDialog(
         title: Text(
-            !isDone 
-            ? "Are you sure you want to move this task to DONE section?"
-            : "Do you want to mark this task as TODO?",),
+          !isDone
+              ? "Are you sure you want to move this task to DONE section?"
+              : "Do you want to mark this task as TODO?",
+        ),
         actions: <Widget>[
           FlatButton(
             child: const Text(
@@ -83,11 +84,16 @@ class TodoItem extends StatelessWidget {
       },
       onDismissed: (direction) => TodoTaskRepository.removeTodoTask(todoId),
       child: Card(
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(
+            8.0,
+          ),
+        ),
         color: backgroundColor,
-        elevation: 5,
+        elevation: 6,
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: 4.0,
+            vertical: 8.0,
             horizontal: 16.0,
           ),
           child: Row(
@@ -96,8 +102,9 @@ class TodoItem extends StatelessWidget {
               Text(
                 todoTitle,
                 style: TextStyle(
-                  color: Colors.white,
+                  color: Theme.of(context).accentColor,
                   fontWeight: FontWeight.w600,
+                  fontSize: 18,
                 ),
               ),
               Row(
@@ -106,12 +113,12 @@ class TodoItem extends StatelessWidget {
                     icon: Icon(
                       !isDone ? Icons.done : Icons.close,
                     ),
-                    color: Colors.white,
+                    color: Theme.of(context).accentColor,
                     onPressed: () => showConfirmationDialog(context),
                   ),
                   IconButton(
                     icon: Icon(Icons.edit),
-                    color: Colors.white,
+                    color: Theme.of(context).accentColor,
                     onPressed: () => showEditBottomSheet(context),
                   )
                 ],

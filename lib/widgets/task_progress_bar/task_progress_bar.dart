@@ -8,7 +8,7 @@ class TaskProgressBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: Theme.of(context).primaryColor,
+      color: Color.fromARGB(30, 196, 196, 196),
       padding: const EdgeInsets.symmetric(
         vertical: 8.0,
       ),
@@ -25,7 +25,7 @@ class TaskProgressBar extends StatelessWidget {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
-                color: Colors.white,
+                color: Theme.of(context).accentColor,
               ),
             ),
           ),
@@ -48,19 +48,20 @@ class ProgressIndicator extends StatelessWidget {
         print(containerWidth);
         return Container(
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(10),
-                bottomRight: Radius.circular(10),
-              ),
-              color: Theme.of(context).accentColor),
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(10),
+              bottomRight: Radius.circular(10),
+            ),
+            color: Theme.of(context).accentColor,
+          ),
           width: containerWidth,
           child: Text(
             "Daily progress",
             maxLines: 1,
             style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.w500,
-            ),
+                fontSize: 16,
+                fontWeight: FontWeight.w500,
+                color: Theme.of(context).primaryColor),
             textAlign: TextAlign.center,
           ),
         );
