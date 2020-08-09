@@ -96,61 +96,72 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 48.0, horizontal: 32.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[
-          Text(
-            _isEditMode ? "Edit your task" : "Add a new todo task",
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: 24,
-            ),
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          TextField(
-            decoration: InputDecoration(
-              hintText: 'Enter a title',
-            ),
-            controller: _todoNameController,
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          Row(
-            children: <Widget>[
-              Text(
-                "Pick a color",
-                style: TextStyle(fontSize: 18),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(
+          horizontal: 32.0,
+          vertical: 16.0,
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: <Widget>[
+            Text(
+              _isEditMode ? "Edit your task" : "Add a new todo task",
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 24,
               ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.centerRight,
-                  child: GestureDetector(
-                    onTap: () => _showColorPickerDialog(context),
-                    child: CircleAvatar(
-                      backgroundColor: _selectedColorARGB,
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Padding(
+              padding: EdgeInsets.only(
+                  bottom: MediaQuery.of(context).viewInsets.bottom),
+              child: TextField(
+                autofocus: true,
+                decoration: InputDecoration(
+                  hintText: 'Enter a title',
+                ),
+                controller: _todoNameController,
+              ),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: <Widget>[
+                Text(
+                  "Pick a color",
+                  style: TextStyle(fontSize: 18),
+                ),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.centerRight,
+                    child: GestureDetector(
+                      onTap: () => _showColorPickerDialog(context),
+                      child: CircleAvatar(
+                        backgroundColor: _selectedColorARGB,
+                      ),
                     ),
                   ),
                 ),
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            FlatButton(
+              color: Theme.of(context).primaryColor,
+              textColor: Theme.of(context).primaryTextTheme.headline1.color,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
               ),
-            ],
-          ),
-          SizedBox(
-            height: 20,
-          ),
-          FlatButton(
-            color: Theme.of(context).primaryColor,
-            textColor: Theme.of(context).primaryTextTheme.headline1.color,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16.0)),
-            child: Text(_isEditMode ? "Edit" : "Save"),
-            onPressed: _isEditMode ? _editTodoItem : _addTodoItem,
-          )
-        ],
+              child: Text(_isEditMode ? "Edit" : "Save"),
+              onPressed: _isEditMode ? _editTodoItem : _addTodoItem,
+            )
+          ],
+        ),
       ),
     );
   }
