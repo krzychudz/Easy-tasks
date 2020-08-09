@@ -136,7 +136,7 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
                     ),
                   ),
                 ),
-              )
+              ),
             ],
           ),
           SizedBox(

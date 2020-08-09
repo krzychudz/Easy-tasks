@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import '../repositories/todo_repository.dart' as TodoTaskRepository;
 import 'todo_item_mange_modal.dart';
 
 import '../widgets/delete_confirmation_dialog.dart' as DialogHelper;
+import '../repositories/todo_repository.dart' as TodoTaskRepository;
 
 class TodoItem extends StatelessWidget {
   final String todoTitle;
@@ -28,8 +28,10 @@ class TodoItem extends StatelessWidget {
     showDialog(
       context: context,
       child: AlertDialog(
-        title: const Text(
-            "Are you sure you want to move this task to DONE section?"),
+        title: Text(
+            !isDone 
+            ? "Are you sure you want to move this task to DONE section?"
+            : "Do you want to mark this task as TODO?",),
         actions: <Widget>[
           FlatButton(
             child: const Text(
@@ -37,7 +39,7 @@ class TodoItem extends StatelessWidget {
               style: TextStyle(color: Colors.red),
             ),
             onPressed: () async {
-              await setItemAsDone();
+              await setItemDoneState(!isDone);
               Navigator.of(context).pop();
             },
           ),
@@ -54,11 +56,11 @@ class TodoItem extends StatelessWidget {
     );
   }
 
-  Future<void> setItemAsDone() async {
+  Future<void> setItemDoneState(bool isDone) async {
     TodoTaskRepository.updateTodoTask(
       {
         "id": todoId,
-        "isDone": true,
+        "isDone": isDone,
       },
     );
   }
@@ -100,12 +102,13 @@ class TodoItem extends StatelessWidget {
               ),
               Row(
                 children: <Widget>[
-                  if (!isDone)
-                    IconButton(
-                      icon: Icon(Icons.done),
-                      color: Colors.white,
-                      onPressed: () => showConfirmationDialog(context),
+                  IconButton(
+                    icon: Icon(
+                      !isDone ? Icons.done : Icons.close,
                     ),
+                    color: Colors.white,
+                    onPressed: () => showConfirmationDialog(context),
+                  ),
                   IconButton(
                     icon: Icon(Icons.edit),
                     color: Colors.white,
