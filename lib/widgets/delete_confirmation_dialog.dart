@@ -2,7 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 
-Future<bool> showConfirmationDialog(BuildContext buildContext) async {
+Future<bool> showConfirmationDialog({BuildContext buildContext, String title, possitiveButtonCallback, negativeButtonCallback}) async {
   return await showDialog(
       context: buildContext,
       builder: (BuildContext ctx) {
@@ -25,7 +25,7 @@ Future<bool> showConfirmationDialog(BuildContext buildContext) async {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Do you want to remove this item?',
+                    title,
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
@@ -38,13 +38,22 @@ Future<bool> showConfirmationDialog(BuildContext buildContext) async {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      RaisedButton(
-                        child: Text('No'),
-                        onPressed: () => Navigator.of(buildContext).pop(false),
+                      Expanded(
+                        child: CircularRaisedButton(
+                          label: 'No',
+                          backgroundColor: Color.fromARGB(255, 0, 255, 194),
+                          onPressed: negativeButtonCallback,
+                        ),
                       ),
-                      RaisedButton(
-                        child: Text('Yes'),
-                        onPressed: () => Navigator.of(buildContext).pop(true),
+                      SizedBox(
+                        width: 32,
+                      ),
+                      Expanded(
+                        child: CircularRaisedButton(
+                          label: 'Yes',
+                          backgroundColor: Colors.red,
+                          onPressed: possitiveButtonCallback,
+                        ),
                       ),
                     ],
                   )
@@ -54,4 +63,28 @@ Future<bool> showConfirmationDialog(BuildContext buildContext) async {
           ),
         );
       });
+}
+
+class CircularRaisedButton extends StatelessWidget {
+  const CircularRaisedButton(
+      {Key key, this.backgroundColor, this.label, this.onPressed})
+      : super(key: key);
+
+  final backgroundColor;
+  final label;
+  final Function onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    return RaisedButton(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          16.0,
+        ),
+      ),
+      color: backgroundColor,
+      child: Text(label),
+      onPressed: onPressed,
+    );
+  }
 }

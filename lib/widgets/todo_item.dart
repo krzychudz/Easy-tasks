@@ -25,40 +25,21 @@ class TodoItem extends StatelessWidget {
   }
 
   void showConfirmationDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      child: AlertDialog(
-        title: Text(
-          !isDone
-              ? "Are you sure you want to move this task to DONE section?"
-              : "Do you want to mark this task as TODO?",
-        ),
-        actions: <Widget>[
-          FlatButton(
-            child: const Text(
-              "Yes",
-              style: TextStyle(color: Colors.red),
-            ),
-            onPressed: () async {
-              await setItemDoneState(!isDone);
-              Navigator.of(context).pop();
-            },
-          ),
-          FlatButton(
-            child: const Text(
-              "No",
-            ),
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-          )
-        ],
-      ),
+    DialogHelper.showConfirmationDialog(
+      buildContext: context,
+      title: !isDone
+          ? "Are you sure you want to move this task to DONE section?"
+          : "Do you want to mark this task as TODO?",
+      negativeButtonCallback: () => Navigator.of(context).pop(false),
+      possitiveButtonCallback: () async {
+        Navigator.of(context).pop();
+        setItemDoneState(!isDone);
+      }
     );
   }
 
   Future<void> setItemDoneState(bool isDone) async {
-    TodoTaskRepository.updateTodoTask(
+    await TodoTaskRepository.updateTodoTask(
       {
         "id": todoId,
         "isDone": isDone,
@@ -80,7 +61,12 @@ class TodoItem extends StatelessWidget {
         ),
       ),
       confirmDismiss: (dismissDirection) async {
-        return await DialogHelper.showConfirmationDialog(context);
+        return await DialogHelper.showConfirmationDialog(
+          buildContext: context,
+          title: 'Do you want to remove this item?',
+          possitiveButtonCallback: () => Navigator.of(context).pop(true),
+          negativeButtonCallback: () => Navigator.of(context).pop(false),
+        );
       },
       onDismissed: (direction) => TodoTaskRepository.removeTodoTask(todoId),
       child: Card(
