@@ -80,7 +80,7 @@ class TodoItem extends StatelessWidget {
         ),
       ),
       confirmDismiss: (dismissDirection) async {
-        return await DialogHelper.showDeleteConfirmationDialog(context);
+        return await DialogHelper.showConfirmationDialog(context);
       },
       onDismissed: (direction) => TodoTaskRepository.removeTodoTask(todoId),
       child: Card(
