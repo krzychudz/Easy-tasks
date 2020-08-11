@@ -23,7 +23,7 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
   TextEditingController _todoNameController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
   var _isEditMode = false;
-  var _selectedColorARGB = Color(0);
+  var _selectedColorARGB = Color.fromARGB(240, 71, 208, 238);
 
   Future<void> _addTodoItem() async {
     await TodoTaskRepository.pushTodoTaskToFirestore({
@@ -79,7 +79,6 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
   @override
   void initState() {
     super.initState();
-    print(widget.backgroundColor);
     _isEditMode = widget.taskName.isNotEmpty && widget.taskId.isNotEmpty;
     if (_isEditMode) {
       _todoNameController.text = widget.taskName;
@@ -92,7 +91,7 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
     if (widget.backgroundColor != null) {
       _selectedColorARGB = widget.backgroundColor;
     } else {
-      _selectedColorARGB = Theme.of(context).primaryColor;
+      _selectedColorARGB = Color.fromARGB(240, 71, 208, 238);
     }
   }
 
