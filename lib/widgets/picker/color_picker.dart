@@ -48,7 +48,9 @@ class ColorPicker extends StatelessWidget {
                 ),
                 itemBuilder: (context, index) => GestureDetector(
                   onTap: () {
-                    Navigator.of(context).pop(colorsList[index]);
+                    Navigator.of(context).pop(
+                      colorsList[index],
+                    );
                   },
                   child: CircleAvatar(
                     backgroundColor: colorsList[index],

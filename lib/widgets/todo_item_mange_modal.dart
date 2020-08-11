@@ -36,6 +36,7 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
         _selectedColorARGB.blue,
       ],
       "isDone": false,
+      "workingTime": _timeController.text,
     });
 
     Navigator.pop(context);
@@ -52,6 +53,7 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
       "id": widget.taskId,
       "name": _todoNameController.text,
       "backgroundColor": selectedColorToList,
+      "workingTime": _timeController.text,
     });
 
     Navigator.pop(context);
