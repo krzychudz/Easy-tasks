@@ -34,6 +34,7 @@ List<Widget> preapreFinalList(dynamic todos, BuildContext context) {
         todoTitle: todos[i]["name"],
         backgroundColor: backgroundColorARGB,
         isDone: todos[i]["isDone"],
+        workingTime: todos[i]['workingTime'],
       ),
     );
   }

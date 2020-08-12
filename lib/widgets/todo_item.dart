@@ -10,8 +10,15 @@ class TodoItem extends StatelessWidget {
   final String todoId;
   final Color backgroundColor;
   final bool isDone;
+  final String workingTime;
 
-  TodoItem({this.todoId, this.todoTitle, this.backgroundColor, this.isDone});
+  TodoItem({
+    this.todoId,
+    this.todoTitle,
+    this.backgroundColor,
+    this.isDone,
+    this.workingTime,
+  });
 
   void showEditBottomSheet(BuildContext context) {
     showModalBottomSheet(
@@ -26,16 +33,15 @@ class TodoItem extends StatelessWidget {
 
   void showConfirmationDialog(BuildContext context) {
     DialogHelper.showConfirmationDialog(
-      buildContext: context,
-      title: !isDone
-          ? "Are you sure you want to move this task to DONE section?"
-          : "Do you want to mark this task as TODO?",
-      negativeButtonCallback: () => Navigator.of(context).pop(false),
-      possitiveButtonCallback: () async {
-        Navigator.of(context).pop();
-        setItemDoneState(!isDone);
-      }
-    );
+        buildContext: context,
+        title: !isDone
+            ? "Are you sure you want to move this task to DONE section?"
+            : "Do you want to mark this task as TODO?",
+        negativeButtonCallback: () => Navigator.of(context).pop(false),
+        possitiveButtonCallback: () async {
+          Navigator.of(context).pop();
+          setItemDoneState(!isDone);
+        });
   }
 
   Future<void> setItemDoneState(bool isDone) async {
@@ -85,13 +91,28 @@ class TodoItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Text(
-                todoTitle,
-                style: TextStyle(
-                  color: Theme.of(context).accentColor,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 18,
+              Container(
+                width: 150,
+                child: Text(
+                  todoTitle,
+                  style: TextStyle(
+                    color: Theme.of(context).accentColor,
+                    fontWeight: FontWeight.w600,
+                    fontSize: 16,
+                  ),
                 ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Icon(
+                    Icons.timer,
+                  ),
+                  SizedBox(
+                    width: 6,
+                  ),
+                  Text('$workingTime min'),
+                ],
               ),
               Row(
                 children: <Widget>[
