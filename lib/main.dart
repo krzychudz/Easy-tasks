@@ -15,7 +15,8 @@ class MyApp extends StatelessWidget {
         primaryColor: Colors.white,
         accentColor: Colors.black,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        canvasColor: Colors.transparent
+        canvasColor: Colors.transparent,
+        fontFamily: 'Roboto'
       ),
       initialRoute: '/',
       routes: {
