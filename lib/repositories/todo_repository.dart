@@ -23,3 +23,12 @@ Future<void> updateTodoTask(Map<String, dynamic> taskDataToEdit) async {
       .document(taskId)
       .updateData(taskDataToEdit);
 }
+
+Future<void> clearAllTasks() async {
+  return await Firestore.instance.collection(collectionName).getDocuments().then((value) => 
+    value.documents.forEach((element) {
+      print(element.documentID);
+      Firestore.instance.collection(collectionName).document(element.documentID).delete();
+    })
+  );
+}

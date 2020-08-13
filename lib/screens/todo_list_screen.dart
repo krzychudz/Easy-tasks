@@ -5,6 +5,8 @@ import 'package:easy_notes/widgets/side_drawer.dart';
 import '../widgets/task_progress_bar/task_progress_bar.dart';
 import '../widgets/todo_item_mange_modal.dart';
 import '../helpers/todo_helper.dart' as TodoHelper;
+import '../widgets/delete_confirmation_dialog.dart' as ConfirmationDialog;
+import '../repositories/todo_repository.dart' as TodoRepository;
 
 class TodoListScreen extends StatelessWidget {
   final taskListSnapshot =
@@ -17,7 +19,22 @@ class TodoListScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTaskList(AsyncSnapshot<dynamic> todoItemsSnapshot, BuildContext context) {
+  void _clearAllTasks(BuildContext ctx) {
+    ConfirmationDialog.showConfirmationDialog(
+      buildContext: ctx,
+      title: 'Do you want to clear ALL tasks?',
+      possitiveButtonCallback: () async {
+        await TodoRepository.clearAllTasks();
+        Navigator.of(ctx).pop();
+      },
+      negativeButtonCallback: () {
+        Navigator.of(ctx).pop();
+      },
+    );
+  }
+
+  Widget _buildTaskList(
+      AsyncSnapshot<dynamic> todoItemsSnapshot, BuildContext context) {
     if (todoItemsSnapshot.connectionState == ConnectionState.waiting) {
       return Center(
         child: CircularProgressIndicator(),
@@ -61,6 +78,12 @@ class TodoListScreen extends StatelessWidget {
         elevation: 0,
         title: Text("Daily Tasks"),
         actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.clear_all,
+            ),
+            onPressed: () => _clearAllTasks(context),
+          ),
           IconButton(
             icon: Icon(
               Icons.add,
