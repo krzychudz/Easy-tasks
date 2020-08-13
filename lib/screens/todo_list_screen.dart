@@ -7,6 +7,7 @@ import '../widgets/todo_item_mange_modal.dart';
 import '../helpers/todo_helper.dart' as TodoHelper;
 import '../widgets/delete_confirmation_dialog.dart' as ConfirmationDialog;
 import '../repositories/todo_repository.dart' as TodoRepository;
+import '../helpers/date_helper.dart' as Date;
 
 class TodoListScreen extends StatelessWidget {
   final taskListSnapshot =
@@ -76,7 +77,7 @@ class TodoListScreen extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
-        title: Text("Daily Tasks"),
+        title: Text("${Date.getCurrentDate()}"),
         actions: <Widget>[
           IconButton(
             icon: Icon(
