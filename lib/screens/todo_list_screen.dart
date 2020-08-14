@@ -73,7 +73,6 @@ class TodoListScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomPadding: false,
-      drawer: SideDrawer(),
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
