@@ -7,12 +7,14 @@ import '../widgets/button/circular_raised_button.dart';
 class MangeTodoItemModal extends StatefulWidget {
   final String taskName;
   final String taskId;
+  final String workingTime;
   final Color backgroundColor;
 
   MangeTodoItemModal({
     this.taskName = "",
     this.taskId = "",
     this.backgroundColor,
+    this.workingTime,
   });
 
   @override
@@ -84,6 +86,7 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
     _isEditMode = widget.taskName.isNotEmpty && widget.taskId.isNotEmpty;
     if (_isEditMode) {
       _todoNameController.text = widget.taskName;
+      _timeController.text = widget.workingTime;
     }
   }
 
@@ -129,17 +132,27 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
             SizedBox(
               height: 20,
             ),
-            CircularInput(
-              textEditingController: _todoNameController,
-              hint: 'Set a name',
-            ),
-            SizedBox(
-              height: 20,
-            ),
-            CircularInput(
-              textEditingController: _timeController,
-              hint: 'Set a time (min)',
-              inputType: TextInputType.number,
+            Padding(
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom,
+              ),
+                child: Column(
+                  children: [
+                    CircularInput(
+                      textEditingController: _todoNameController,
+                      hint: 'Set a name',
+                    ),
+                    SizedBox(
+                      height: 20,
+                    ),
+                    CircularInput(
+                      textEditingController: _timeController,
+                      hint: 'Set a time (min)',
+                      inputType: TextInputType.number,
+                    ),
+                  ],
+                ),
+              
             ),
             SizedBox(
               height: 20,

@@ -22,11 +22,13 @@ class TodoItem extends StatelessWidget {
 
   void showEditBottomSheet(BuildContext context) {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: context,
       builder: (bCtx) => MangeTodoItemModal(
         taskId: todoId,
         taskName: todoTitle,
         backgroundColor: backgroundColor,
+        workingTime: workingTime
       ),
     );
   }

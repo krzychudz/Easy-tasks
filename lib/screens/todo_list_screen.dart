@@ -15,6 +15,7 @@ class TodoListScreen extends StatelessWidget {
 
   void _showBottomModalSheet(BuildContext ctx) {
     showModalBottomSheet(
+      isScrollControlled: true,
       context: ctx,
       builder: (bCtx) => MangeTodoItemModal(),
     );
