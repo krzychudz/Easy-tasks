@@ -27,6 +27,8 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
   var _isEditMode = false;
   var _selectedColorARGB = Color.fromARGB(240, 71, 208, 238);
 
+  final _formKey = GlobalKey<FormState>();
+
   Future<void> _addTodoItem() async {
     await TodoTaskRepository.pushTodoTaskToFirestore({
       "id": DateTime.now().toString(),
@@ -136,11 +138,22 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
               padding: EdgeInsets.only(
                 bottom: MediaQuery.of(context).viewInsets.bottom,
               ),
+              child: Form(
+                key: _formKey,
                 child: Column(
                   children: [
                     CircularInput(
                       textEditingController: _todoNameController,
                       hint: 'Set a name',
+                      textInputAction: TextInputAction.next,
+                      validator: (value) {
+                        if (value.isEmpty) {
+                          return 'Please, enter a name';
+                        } else if (value.length < 3) {
+                          return 'The name have to containts at least 3 characters';
+                        }
+                        return null;
+                      },
                     ),
                     SizedBox(
                       height: 20,
@@ -149,10 +162,11 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
                       textEditingController: _timeController,
                       hint: 'Set a time (min)',
                       inputType: TextInputType.number,
+                      textInputAction: TextInputAction.done,
                     ),
                   ],
                 ),
-              
+              ),
             ),
             SizedBox(
               height: 20,
@@ -185,7 +199,10 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
             CircularRaisedButton(
               label: _isEditMode ? "Edit" : "Save",
               backgroundColor: Color.fromARGB(255, 0, 255, 194),
-              onPressed: _isEditMode ? _editTodoItem : _addTodoItem,
+              onPressed: () => {
+                if (_formKey.currentState.validate())
+                  {_isEditMode ? _editTodoItem() : _addTodoItem()}
+              },
             ),
           ],
         ),
@@ -200,12 +217,16 @@ class CircularInput extends StatelessWidget {
     @required TextEditingController textEditingController,
     @required this.hint,
     this.inputType = TextInputType.text,
+    this.validator,
+    this.textInputAction,
   })  : _todoNameController = textEditingController,
         super(key: key);
 
   final TextEditingController _todoNameController;
   final String hint;
   final TextInputType inputType;
+  final Function(String) validator;
+  final TextInputAction textInputAction;
 
   @override
   Widget build(BuildContext context) {
@@ -227,15 +248,16 @@ class CircularInput extends StatelessWidget {
         vertical: 0,
         horizontal: 16,
       ),
-      child: TextField(
+      child: TextFormField(
         keyboardType: inputType,
         textAlign: TextAlign.center,
-        autofocus: true,
         decoration: InputDecoration(
           hintText: hint,
           border: InputBorder.none,
         ),
         controller: _todoNameController,
+        onEditingComplete: () => FocusScope.of(context).nextFocus(),
+        validator: validator,
       ),
     );
   }
