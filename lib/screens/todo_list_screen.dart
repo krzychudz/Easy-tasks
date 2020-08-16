@@ -6,7 +6,7 @@ import '../widgets/task_progress_bar/task_progress_bar.dart';
 import '../widgets/todo_item_mange_modal.dart';
 import '../helpers/todo_helper.dart' as TodoHelper;
 import '../widgets/delete_confirmation_dialog.dart' as ConfirmationDialog;
-import '../repositories/todo_repository.dart' as TodoRepository;
+import '../repositories/todo/task_repository.dart' as TodoRepository;
 import '../helpers/date_helper.dart' as Date;
 
 class TodoListScreen extends StatelessWidget {

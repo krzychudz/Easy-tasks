@@ -1,7 +1,7 @@
 import 'package:easy_notes/widgets/picker/color_picker.dart';
 import 'package:flutter/material.dart';
 
-import '../repositories/todo_repository.dart' as TodoTaskRepository;
+import '../repositories/todo/task_repository.dart' as TodoTaskRepository;
 import '../widgets/button/circular_raised_button.dart';
 
 class MangeTodoItemModal extends StatefulWidget {

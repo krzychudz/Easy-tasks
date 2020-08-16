@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'todo_item_mange_modal.dart';
 
 import '../widgets/delete_confirmation_dialog.dart' as DialogHelper;
-import '../repositories/todo_repository.dart' as TodoTaskRepository;
+import '../repositories/todo/task_repository.dart' as TodoTaskRepository;
 
 class TodoItem extends StatelessWidget {
   final String todoTitle;
