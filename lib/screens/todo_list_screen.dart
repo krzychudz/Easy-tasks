@@ -1,6 +1,7 @@
+import 'package:easy_notes/provider/tasks_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:easy_notes/widgets/side_drawer.dart';
+import 'package:provider/provider.dart';
 
 import '../widgets/task_progress_bar/task_progress_bar.dart';
 import '../widgets/todo_item_mange_modal.dart';
@@ -8,6 +9,7 @@ import '../helpers/todo_helper.dart' as TodoHelper;
 import '../widgets/delete_confirmation_dialog.dart' as ConfirmationDialog;
 import '../repositories/todo/task_repository.dart' as TodoRepository;
 import '../helpers/date_helper.dart' as Date;
+import '../models/task.dart';
 
 class TodoListScreen extends StatelessWidget {
   final taskListSnapshot =
@@ -36,20 +38,19 @@ class TodoListScreen extends StatelessWidget {
   }
 
   Widget _buildTaskList(
-      AsyncSnapshot<dynamic> todoItemsSnapshot, BuildContext context) {
-    if (todoItemsSnapshot.connectionState == ConnectionState.waiting) {
-      return Center(
-        child: CircularProgressIndicator(),
-      );
-    }
-    var todoDocuments = todoItemsSnapshot.data.documents;
-    if (todoDocuments.length == 0) {
+      List<TaskModel> tasks, BuildContext context) {
+    // if (todoItemsSnapshot.connectionState == ConnectionState.waiting) {
+    //   return Center(
+    //     child: CircularProgressIndicator(),
+    //   );
+    // }
+    if (tasks.isEmpty) {
       return Center(
         child: Text("You have no todo task. To add one click on the + button."),
       );
     }
 
-    List<Widget> list = TodoHelper.preapreFinalList(todoDocuments, context);
+    List<Widget> list = TodoHelper.preapreFinalList(tasks, context);
 
     return ListView.builder(
       itemBuilder: (ctx, index) => list[index],
@@ -72,6 +73,7 @@ class TodoListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var data = Provider.of<TasksProvider>(context).tasks;
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(
@@ -99,10 +101,10 @@ class TodoListScreen extends StatelessWidget {
           Expanded(
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
-              child: StreamBuilder(
-                stream: taskListSnapshot,
-                builder: (ctx, todoItemsSnapshot) {
-                  return _buildTaskList(todoItemsSnapshot, context);
+              child: Consumer<TasksProvider>(
+                //stream: taskListSnapshot,
+                builder: (ctx, tasksProvider, _) {
+                  return _buildTaskList(tasksProvider.tasks, context);
                 },
               ),
             ),

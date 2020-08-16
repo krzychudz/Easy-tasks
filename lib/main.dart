@@ -1,9 +1,20 @@
+import 'package:easy_notes/provider/tasks_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import './screens/todo_list_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => TasksProvider(),
+        )
+      ],
+      child: MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -12,12 +23,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Easy tasks',
       theme: ThemeData(
-        primaryColor: Colors.white,
-        accentColor: Colors.black,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        canvasColor: Colors.transparent,
-        fontFamily: 'Roboto'
-      ),
+          primaryColor: Colors.white,
+          accentColor: Colors.black,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          canvasColor: Colors.transparent,
+          fontFamily: 'Roboto'),
       initialRoute: '/',
       routes: {
         '/': (ctx) => TodoListScreen(),

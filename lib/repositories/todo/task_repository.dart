@@ -7,9 +7,9 @@ import '../../models/task.dart';
 String collectionName = "todos";
 
 class TaskDatabaseRepository implements TaskRepositoryInterface {
-
   @override
-  String sqlTableSchema = '(id INTEGER PRIMARY KEY, title TEXT, duration TEXT, isDone INTEGER)';
+  String sqlTableSchema =
+      '(id INTEGER PRIMARY KEY, title TEXT, duration TEXT, isDone INTEGER)';
 
   DatabaseInterface _database = SQLliteDatabase(); // TODO inject this!!
 
@@ -24,7 +24,9 @@ class TaskDatabaseRepository implements TaskRepositoryInterface {
   @override
   Future<List<TaskModel>> getAllTasks(String tableName) async {
     var tasksData = await _database.getAllTableData(tableName);
-    return tasksData.map((taskData) => TaskModel.toObject(taskData));
+    return Future<List<TaskModel>>.value(
+      tasksData.map((taskData) => TaskModel.toObject(taskData)).toList(),
+    );
   }
 
   @override
@@ -33,17 +35,16 @@ class TaskDatabaseRepository implements TaskRepositoryInterface {
   }
 }
 
-
-Future<void> pushTodoTaskToFirestore(Map<String, dynamic> todoTask) async {    
+Future<void> pushTodoTaskToFirestore(Map<String, dynamic> todoTask) async {
   TaskRepositoryInterface taskRepositoryInterface = TaskDatabaseRepository();
-  taskRepositoryInterface.insertTask(TaskModel.toObject({
-    'id': 200,
-    'title': 'New task',
-    'duration': '60',
-    'isDone': false,
-  })).then((value) => 
-    print("INSERT SUCCESS: " + value.toString())
-  );
+  taskRepositoryInterface
+      .insertTask(TaskModel.toObject({
+        'id': 200,
+        'title': 'New task',
+        'duration': '60',
+        'isDone': false,
+      }))
+      .then((value) => print("INSERT SUCCESS: " + value.toString()));
 }
 
 Future<void> removeTodoTask(String taskId) async {
@@ -62,10 +63,14 @@ Future<void> updateTodoTask(Map<String, dynamic> taskDataToEdit) async {
 }
 
 Future<void> clearAllTasks() async {
-  return await Firestore.instance.collection(collectionName).getDocuments().then((value) => 
-    value.documents.forEach((element) {
-      print(element.documentID);
-      Firestore.instance.collection(collectionName).document(element.documentID).delete();
-    })
-  );
+  return await Firestore.instance
+      .collection(collectionName)
+      .getDocuments()
+      .then((value) => value.documents.forEach((element) {
+            print(element.documentID);
+            Firestore.instance
+                .collection(collectionName)
+                .document(element.documentID)
+                .delete();
+          }));
 }

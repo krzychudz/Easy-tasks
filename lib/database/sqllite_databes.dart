@@ -15,7 +15,7 @@ class SQLliteDatabase implements DatabaseInterface {
   @override
   Future<List<Map<String, dynamic>>> getAllTableData(String tableName) async {
     _database = await getDatabase();
-    return await _database.query(tableName);
+    return _database.query(tableName);
   }
 
   @override
