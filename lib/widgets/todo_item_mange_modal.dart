@@ -1,8 +1,10 @@
-import 'package:easy_notes/widgets/picker/color_picker.dart';
+import 'package:easy_notes/models/task.dart';
 import 'package:flutter/material.dart';
-
+import 'package:provider/provider.dart';
 import '../repositories/todo/task_repository.dart' as TodoTaskRepository;
+import '../provider/tasks_provider.dart';
 import '../widgets/button/circular_raised_button.dart';
+import '../widgets/picker/color_picker.dart';
 
 class MangeTodoItemModal extends StatefulWidget {
   final String taskName;
@@ -25,23 +27,20 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
   TextEditingController _todoNameController = TextEditingController();
   TextEditingController _timeController = TextEditingController();
   var _isEditMode = false;
-  var _selectedColorARGB = Color.fromARGB(240, 71, 208, 238);
+  Color _selectedColorARGB;
 
   final _formKey = GlobalKey<FormState>();
 
   Future<void> _addTodoItem() async {
-    await TodoTaskRepository.pushTodoTaskToFirestore({
-      "id": DateTime.now().toString(),
-      "name": _todoNameController.text,
-      "backgroundColor": [
-        _selectedColorARGB.alpha,
-        _selectedColorARGB.red,
-        _selectedColorARGB.green,
-        _selectedColorARGB.blue,
-      ],
-      "isDone": false,
-      "workingTime": _timeController.text,
-    });
+    await Provider.of<TasksProvider>(context, listen: false).addNewTask(
+      TaskModel(
+        id: DateTime.now().toString(),
+        title: _todoNameController.text,
+        isDone: false,
+        duration: _timeController.text,
+        backgroundColor: _selectedColorARGB,
+      ),
+    );
 
     Navigator.pop(context);
   }

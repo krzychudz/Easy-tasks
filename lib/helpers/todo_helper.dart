@@ -9,14 +9,6 @@ List<Widget> preapreFinalList(List<TaskModel> tasks, BuildContext context) {
   bool isTodoHeaderAdded = false;
 
   for (int i = 0; i < tasks.length; i++) {
-    // var backendColorsList = tasks[i]["backgroundColor"];
-    // var backgroundColorARGB = Color.fromARGB(
-    //   backendColorsList[0],
-    //   backendColorsList[1],
-    //   backendColorsList[2],
-    //   backendColorsList[3],
-    // );
-
     if (tasks[i].isDone && !isDoneHeaderAdded) {
       finalList.add(
         buildListHeader("Done", context),
@@ -33,7 +25,7 @@ List<Widget> preapreFinalList(List<TaskModel> tasks, BuildContext context) {
       TodoItem(
         todoId: tasks[i].id.toString(),
         todoTitle: tasks[i].title,
-        backgroundColor: Colors.teal,
+        backgroundColor: tasks[i].backgroundColor,
         isDone: tasks[i].isDone,
         workingTime: tasks[i].duration,
       ),

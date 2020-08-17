@@ -9,7 +9,7 @@ String collectionName = "todos";
 class TaskDatabaseRepository implements TaskRepositoryInterface {
   @override
   String sqlTableSchema =
-      '(id INTEGER PRIMARY KEY, title TEXT, duration TEXT, isDone INTEGER)';
+      '(id STRING PRIMARY KEY, title TEXT, duration TEXT, isDone INTEGER, alpha INTEGER, red INTEGER, green INTEGER, blue INTEGER)';
 
   DatabaseInterface _database = SQLliteDatabase(); // TODO inject this!!
 
@@ -24,6 +24,7 @@ class TaskDatabaseRepository implements TaskRepositoryInterface {
   @override
   Future<List<TaskModel>> getAllTasks(String tableName) async {
     var tasksData = await _database.getAllTableData(tableName);
+    print(tasksData);
     return Future<List<TaskModel>>.value(
       tasksData.map((taskData) => TaskModel.toObject(taskData)).toList(),
     );
@@ -33,18 +34,6 @@ class TaskDatabaseRepository implements TaskRepositoryInterface {
   Future<int> insertTask(TaskModel task) async {
     return await _database.insertData('tasks', task.toMap());
   }
-}
-
-Future<void> pushTodoTaskToFirestore(Map<String, dynamic> todoTask) async {
-  TaskRepositoryInterface taskRepositoryInterface = TaskDatabaseRepository();
-  taskRepositoryInterface
-      .insertTask(TaskModel.toObject({
-        'id': 200,
-        'title': 'New task',
-        'duration': '60',
-        'isDone': false,
-      }))
-      .then((value) => print("INSERT SUCCESS: " + value.toString()));
 }
 
 Future<void> removeTodoTask(String taskId) async {

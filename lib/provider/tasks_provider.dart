@@ -12,9 +12,17 @@ class TasksProvider with ChangeNotifier {
     initTasks();
    }
 
-   void initTasks() async {
+   Future<void> initTasks() async {
      var tasksFromDatabase = await taskRepository.getAllTasks('tasks');
      tasks = tasksFromDatabase;
      notifyListeners();
+   }
+
+   Future<void> addNewTask(TaskModel taskModel) async {
+     var insertResult = await taskRepository.insertTask(taskModel);
+     if (insertResult >= 0) {
+       tasks.add(taskModel);
+       notifyListeners();
+     }
    }
 }
