@@ -46,18 +46,20 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
   }
 
   Future<void> _editTodoItem() async {
-    var selectedColorToList = [
-      _selectedColorARGB.alpha,
-      _selectedColorARGB.red,
-      _selectedColorARGB.green,
-      _selectedColorARGB.blue
-    ];
-    await TodoTaskRepository.updateTodoTask({
-      "id": widget.taskId,
-      "name": _todoNameController.text,
-      "backgroundColor": selectedColorToList,
-      "workingTime": _timeController.text,
-    });
+    await Provider.of<TasksProvider>(context, listen: false).updateTask(
+      widget.taskId,
+      TaskModel.toObject(
+        {
+          "id": widget.taskId,
+          "title": _todoNameController.text,
+          "alpha": _selectedColorARGB.alpha,
+          "red": _selectedColorARGB.red,
+          "blue": _selectedColorARGB.blue,
+          "green": _selectedColorARGB.green,
+          "duration": _timeController.text,
+        },
+      ),
+    );
 
     Navigator.pop(context);
   }

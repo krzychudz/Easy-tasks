@@ -51,6 +51,18 @@ class SQLliteDatabase implements DatabaseInterface {
         .execute('CREATE TABLE IF NOT EXISTS $tableName $builderString');
   }
 
+  @override
+  Future<int> updateData(
+      String tableName, String id, Map<String, dynamic> data) async {
+    _database = await getDatabase();
+    return _database.update(
+      tableName,
+      data,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
+  }
+
   Future<Database> getDatabase() async {
     print('here');
     if (_database != null) {

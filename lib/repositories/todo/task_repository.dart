@@ -39,6 +39,11 @@ class TaskDatabaseRepository implements TaskRepositoryInterface {
   Future<int> removeTask(String id) async {
     return await _database.removeDataById('tasks', id);
   }
+
+  @override
+  Future<int> updateTask(String id, Map<String, dynamic> data) async {
+    return await _database.updateData('tasks', id, data);
+  }
 }
 
 Future<int> removeTodoTask(String taskId) async {

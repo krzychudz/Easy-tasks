@@ -27,6 +27,20 @@ class TasksProvider with ChangeNotifier {
    }
 
    Future<int> removeTask(String id) async {
-     return await taskRepository.removeTask(id);
+     var removeItem = await taskRepository.removeTask(id);
+     if (removeItem >= 0) {
+       tasks.removeWhere((element) => element.id == id);
+       notifyListeners();
+     }
+     return removeItem;
+   }
+
+   Future<int> updateTask(String id, TaskModel data) async {
+     var updateResult = await taskRepository.updateTask(id, data.toMap());
+     if (updateResult >= 0) {
+       var indexToUpdate = tasks.indexWhere((element) => element.id == id);
+       tasks[indexToUpdate] = data;
+       notifyListeners();
+     }
    }
 }
