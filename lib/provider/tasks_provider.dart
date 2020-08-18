@@ -25,4 +25,8 @@ class TasksProvider with ChangeNotifier {
        notifyListeners();
      }
    }
+
+   Future<int> removeTask(String id) async {
+     return await taskRepository.removeTask(id);
+   }
 }

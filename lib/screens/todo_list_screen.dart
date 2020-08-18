@@ -73,7 +73,6 @@ class TodoListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var data = Provider.of<TasksProvider>(context).tasks;
     return Scaffold(
       resizeToAvoidBottomPadding: false,
       appBar: AppBar(

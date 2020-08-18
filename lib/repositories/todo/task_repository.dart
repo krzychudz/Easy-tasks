@@ -34,13 +34,18 @@ class TaskDatabaseRepository implements TaskRepositoryInterface {
   Future<int> insertTask(TaskModel task) async {
     return await _database.insertData('tasks', task.toMap());
   }
+
+  @override
+  Future<int> removeTask(String id) async {
+    return await _database.removeDataById('tasks', id);
+  }
 }
 
-Future<void> removeTodoTask(String taskId) async {
-  return await Firestore.instance
-      .collection(collectionName)
-      .document(taskId)
-      .delete();
+Future<int> removeTodoTask(String taskId) async {
+  // return await Firestore.instance
+  //     .collection(collectionName)
+  //     .document(taskId)
+  //     .delete();
 }
 
 Future<void> updateTodoTask(Map<String, dynamic> taskDataToEdit) async {

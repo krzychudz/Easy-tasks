@@ -1,4 +1,6 @@
+import 'package:easy_notes/provider/tasks_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'todo_item_mange_modal.dart';
 
@@ -76,7 +78,13 @@ class TodoItem extends StatelessWidget {
           negativeButtonCallback: () => Navigator.of(context).pop(false),
         );
       },
-      onDismissed: (direction) => TodoTaskRepository.removeTodoTask(todoId),
+      onDismissed: (direction) async {
+        var removeResult = await Provider.of<TasksProvider>(context, listen: false).removeTask(todoId);
+        if (removeResult == 1) {
+          return true;
+        }
+        return false;
+      },
       child: Card(
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(

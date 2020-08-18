@@ -24,8 +24,13 @@ class SQLliteDatabase implements DatabaseInterface {
   }
 
   @override
-  void removeDataById() {
-    // TODO: implement removeDataById
+  Future<int> removeDataById(String tableName, String id) async {
+    _database = await getDatabase();
+    return _database.delete(
+      tableName,
+      where: 'id = ?',
+      whereArgs: [id],
+    );
   }
 
   @override
