@@ -50,16 +50,3 @@ class TaskDatabaseRepository implements TaskRepositoryInterface {
     return await _database.dropTable('tasks');
   }
 }
-
-// Future<void> clearAllTasks() async {
-//   return await Firestore.instance
-//       .collection(collectionName)
-//       .getDocuments()
-//       .then((value) => value.documents.forEach((element) {
-//             print(element.documentID);
-//             Firestore.instance
-//                 .collection(collectionName)
-//                 .document(element.documentID)
-//                 .delete();
-//           }));
-// }

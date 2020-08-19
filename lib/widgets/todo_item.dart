@@ -60,7 +60,7 @@ class TodoItem extends StatelessWidget {
           "blue": backgroundColor.blue,
           "green": backgroundColor.green,
           "duration": workingTime,
-          "isDone": isDone,
+          "isDone": isDone == true ? 1 : 0,
         },
       ),
     );
