@@ -28,7 +28,7 @@ class TodoListScreen extends StatelessWidget {
       buildContext: ctx,
       title: 'Do you want to clear ALL tasks?',
       possitiveButtonCallback: () async {
-        await TodoRepository.clearAllTasks();
+        await Provider.of<TasksProvider>(ctx, listen: false).removeAllTasks();
         Navigator.of(ctx).pop();
       },
       negativeButtonCallback: () {
@@ -58,15 +58,13 @@ class TodoListScreen extends StatelessWidget {
     );
   }
 
-  int recalculatePercentageOfDone(dynamic todoItemsShnapshot) {
-    if (!todoItemsShnapshot.hasData) {
+  int recalculatePercentageOfDone(List<TaskModel> tasks) {
+    if (tasks.length == 0) {
       return 0;
     }
-    final tasksList =
-        (todoItemsShnapshot.data.documents as List<DocumentSnapshot>);
-    final numberOfTasks = tasksList.length;
+    final numberOfTasks = tasks.length;
     final numberOfDone =
-        tasksList.where((element) => element.data['isDone']).length;
+        tasks.where((element) => element.isDone).length;
 
     return numberOfTasks == 0 ? 0 : numberOfDone * 100 ~/ numberOfTasks;
   }
@@ -108,11 +106,11 @@ class TodoListScreen extends StatelessWidget {
               ),
             ),
           ),
-          StreamBuilder<Object>(
-              stream: taskListSnapshot,
-              builder: (context, todoItemsShnapshot) {
+          Consumer<TasksProvider>(
+              //stream: taskListSnapshot,
+              builder: (ctx, tasksProvider, _) {
                 return TaskProgressBar(
-                  recalculatePercentageOfDone(todoItemsShnapshot),
+                  recalculatePercentageOfDone(tasksProvider.tasks),
                 );
               }),
         ],

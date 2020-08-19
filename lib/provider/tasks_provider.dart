@@ -35,12 +35,18 @@ class TasksProvider with ChangeNotifier {
      return removeItem;
    }
 
-   Future<int> updateTask(String id, TaskModel data) async {
+   void updateTask(String id, TaskModel data) async {
      var updateResult = await taskRepository.updateTask(id, data.toMap());
      if (updateResult >= 0) {
        var indexToUpdate = tasks.indexWhere((element) => element.id == id);
        tasks[indexToUpdate] = data;
        notifyListeners();
      }
+   }
+
+   void removeAllTasks() async {
+     await taskRepository.removeAllTasks();
+     tasks.clear();
+     notifyListeners();
    }
 }

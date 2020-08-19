@@ -7,4 +7,5 @@ abstract class TaskRepositoryInterface {
   Future<int> insertTask(TaskModel task);
   Future<int> removeTask(String id);
   Future<int> updateTask(String id, Map<String, dynamic> data);
+  Future<int> removeAllTasks();
 }

@@ -1,3 +1,4 @@
+import 'package:easy_notes/models/task.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -27,11 +28,10 @@ class TodoItem extends StatelessWidget {
       isScrollControlled: true,
       context: context,
       builder: (bCtx) => MangeTodoItemModal(
-        taskId: todoId,
-        taskName: todoTitle,
-        backgroundColor: backgroundColor,
-        workingTime: workingTime
-      ),
+          taskId: todoId,
+          taskName: todoTitle,
+          backgroundColor: backgroundColor,
+          workingTime: workingTime),
     );
   }
 
@@ -44,16 +44,25 @@ class TodoItem extends StatelessWidget {
         negativeButtonCallback: () => Navigator.of(context).pop(false),
         possitiveButtonCallback: () async {
           Navigator.of(context).pop();
-          setItemDoneState(!isDone);
+          setItemDoneState(!isDone, context);
         });
   }
 
-  Future<void> setItemDoneState(bool isDone) async {
-    await TodoTaskRepository.updateTodoTask(
-      {
-        "id": todoId,
-        "isDone": isDone,
-      },
+  Future<void> setItemDoneState(bool isDone, BuildContext context) async {
+    Provider.of<TasksProvider>(context, listen: false).updateTask(
+      todoId,
+      TaskModel.toObject(
+        {
+          "id": todoId,
+          "title": todoTitle,
+          "alpha": backgroundColor.alpha,
+          "red": backgroundColor.red,
+          "blue": backgroundColor.blue,
+          "green": backgroundColor.green,
+          "duration": workingTime,
+          "isDone": isDone,
+        },
+      ),
     );
   }
 
@@ -79,7 +88,9 @@ class TodoItem extends StatelessWidget {
         );
       },
       onDismissed: (direction) async {
-        var removeResult = await Provider.of<TasksProvider>(context, listen: false).removeTask(todoId);
+        var removeResult =
+            await Provider.of<TasksProvider>(context, listen: false)
+                .removeTask(todoId);
         if (removeResult == 1) {
           return true;
         }

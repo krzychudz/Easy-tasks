@@ -8,8 +8,9 @@ class SQLliteDatabase implements DatabaseInterface {
   Database _database;
 
   @override
-  void dropTable() {
-    // TODO: implement dropTable
+  Future<int> dropTable(String tableName) async {
+    _database = await getDatabase();
+    return _database.delete(tableName);
   }
 
   @override
