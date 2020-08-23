@@ -10,6 +10,16 @@ class TaskModel {
   TaskModel(
       {this.id, this.title, this.duration, this.isDone, this.backgroundColor});
 
+  int compareTo(TaskModel obj) {
+    if (this.isDone == true && obj.isDone == false) {
+      return 1;
+    } else if (this.isDone == false && obj.isDone == true) {
+      return -1;
+    } else {
+      return 0;
+    }
+  }
+
   Map<String, dynamic> toMap() {
     return {
       'id': id,

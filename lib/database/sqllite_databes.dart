@@ -65,9 +65,7 @@ class SQLliteDatabase implements DatabaseInterface {
   }
 
   Future<Database> getDatabase() async {
-    print('here');
     if (_database != null) {
-      print('here1');
       return _database;
     }
     return openDatabase(

@@ -5,7 +5,6 @@ import 'package:provider/provider.dart';
 import 'todo_item_mange_modal.dart';
 
 import '../widgets/delete_confirmation_dialog.dart' as DialogHelper;
-import '../repositories/todo/task_repository.dart' as TodoTaskRepository;
 import '../provider/tasks_provider.dart';
 
 class TodoItem extends StatelessWidget {
@@ -28,10 +27,12 @@ class TodoItem extends StatelessWidget {
       isScrollControlled: true,
       context: context,
       builder: (bCtx) => MangeTodoItemModal(
-          taskId: todoId,
-          taskName: todoTitle,
-          backgroundColor: backgroundColor,
-          workingTime: workingTime),
+        taskId: todoId,
+        taskName: todoTitle,
+        backgroundColor: backgroundColor,
+        workingTime: workingTime,
+        doneStatus: isDone,
+      ),
     );
   }
 

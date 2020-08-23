@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:easy_notes/database/sqllite_databes.dart';
 import '../../repositories/todo/task_repository_interface.dart';
 import '../../database/database_interface.dart';
@@ -24,7 +23,6 @@ class TaskDatabaseRepository implements TaskRepositoryInterface {
   @override
   Future<List<TaskModel>> getAllTasks(String tableName) async {
     var tasksData = await _database.getAllTableData(tableName);
-    print(tasksData);
     return Future<List<TaskModel>>.value(
       tasksData.map((taskData) => TaskModel.toObject(taskData)).toList(),
     );

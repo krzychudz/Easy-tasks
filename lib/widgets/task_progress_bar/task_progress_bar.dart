@@ -45,7 +45,6 @@ class ProgressIndicator extends StatelessWidget {
     return LayoutBuilder(
       builder: (context, constraints) {
         final containerWidth = constraints.maxWidth * percentageOfDone / 100;
-        print(containerWidth);
         return Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.only(

@@ -1,7 +1,6 @@
 import 'package:easy_notes/models/task.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../repositories/todo/task_repository.dart' as TodoTaskRepository;
 import '../provider/tasks_provider.dart';
 import '../widgets/button/circular_raised_button.dart';
 import '../widgets/picker/color_picker.dart';
@@ -11,12 +10,14 @@ class MangeTodoItemModal extends StatefulWidget {
   final String taskId;
   final String workingTime;
   final Color backgroundColor;
+  final bool doneStatus;
 
   MangeTodoItemModal({
     this.taskName = "",
     this.taskId = "",
     this.backgroundColor,
     this.workingTime,
+    this.doneStatus,
   });
 
   @override
@@ -46,21 +47,16 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
   }
 
   Future<void> _editTodoItem() async {
-    await Provider.of<TasksProvider>(context, listen: false).updateTask(
+    Provider.of<TasksProvider>(context, listen: false).updateTask(
       widget.taskId,
-      TaskModel.toObject(
-        {
-          "id": widget.taskId,
-          "title": _todoNameController.text,
-          "alpha": _selectedColorARGB.alpha,
-          "red": _selectedColorARGB.red,
-          "blue": _selectedColorARGB.blue,
-          "green": _selectedColorARGB.green,
-          "duration": _timeController.text,
-        },
+      TaskModel(
+        id: widget.taskId,
+        title: _todoNameController.text,
+        backgroundColor: _selectedColorARGB,
+        duration: _timeController.text,
+        isDone: widget.doneStatus,
       ),
     );
-
     Navigator.pop(context);
   }
 

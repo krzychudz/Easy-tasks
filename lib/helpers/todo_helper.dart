@@ -8,6 +8,8 @@ List<Widget> preapreFinalList(List<TaskModel> tasks, BuildContext context) {
   bool isDoneHeaderAdded = false;
   bool isTodoHeaderAdded = false;
 
+  tasks.sort((a, b) => a.compareTo(b));
+
   for (int i = 0; i < tasks.length; i++) {
     if (tasks[i].isDone && !isDoneHeaderAdded) {
       finalList.add(

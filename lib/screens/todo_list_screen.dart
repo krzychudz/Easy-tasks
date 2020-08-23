@@ -1,20 +1,15 @@
 import 'package:easy_notes/provider/tasks_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:provider/provider.dart';
 
 import '../widgets/task_progress_bar/task_progress_bar.dart';
 import '../widgets/todo_item_mange_modal.dart';
 import '../helpers/todo_helper.dart' as TodoHelper;
 import '../widgets/delete_confirmation_dialog.dart' as ConfirmationDialog;
-import '../repositories/todo/task_repository.dart' as TodoRepository;
 import '../helpers/date_helper.dart' as Date;
 import '../models/task.dart';
 
 class TodoListScreen extends StatelessWidget {
-  final taskListSnapshot =
-      Firestore.instance.collection('todos').orderBy("isDone").snapshots();
-
   void _showBottomModalSheet(BuildContext ctx) {
     showModalBottomSheet(
       isScrollControlled: true,
@@ -28,7 +23,7 @@ class TodoListScreen extends StatelessWidget {
       buildContext: ctx,
       title: 'Do you want to clear ALL tasks?',
       possitiveButtonCallback: () async {
-        await Provider.of<TasksProvider>(ctx, listen: false).removeAllTasks();
+        Provider.of<TasksProvider>(ctx, listen: false).removeAllTasks();
         Navigator.of(ctx).pop();
       },
       negativeButtonCallback: () {
@@ -39,11 +34,6 @@ class TodoListScreen extends StatelessWidget {
 
   Widget _buildTaskList(
       List<TaskModel> tasks, BuildContext context) {
-    // if (todoItemsSnapshot.connectionState == ConnectionState.waiting) {
-    //   return Center(
-    //     child: CircularProgressIndicator(),
-    //   );
-    // }
     if (tasks.isEmpty) {
       return Center(
         child: Text("You have no todo task. To add one click on the + button."),
@@ -99,15 +89,14 @@ class TodoListScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Consumer<TasksProvider>(
-                //stream: taskListSnapshot,
-                builder: (ctx, tasksProvider, _) {
+                builder: (ctx, tasksProvider, a) {
+
                   return _buildTaskList(tasksProvider.tasks, context);
                 },
               ),
             ),
           ),
           Consumer<TasksProvider>(
-              //stream: taskListSnapshot,
               builder: (ctx, tasksProvider, _) {
                 return TaskProgressBar(
                   recalculatePercentageOfDone(tasksProvider.tasks),
