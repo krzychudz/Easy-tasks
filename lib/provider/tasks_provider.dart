@@ -4,7 +4,7 @@ import 'package:easy_notes/repositories/todo/task_repository_interface.dart';
 import 'package:flutter/material.dart';
 
 class TasksProvider with ChangeNotifier {
-   List<TaskModel> tasks = [];
+   List<TaskModel> tasks;
    TaskRepositoryInterface taskRepository;
 
    TasksProvider() {

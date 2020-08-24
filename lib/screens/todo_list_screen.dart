@@ -32,8 +32,13 @@ class TodoListScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTaskList(
-      List<TaskModel> tasks, BuildContext context) {
+  Widget _buildTaskList(List<TaskModel> tasks, BuildContext context) {
+    if (tasks == null) {
+      return Center(
+        child: CircularProgressIndicator(),
+      );
+    }
+
     if (tasks.isEmpty) {
       return Center(
         child: Text("You have no todo task. To add one click on the + button."),
@@ -49,12 +54,12 @@ class TodoListScreen extends StatelessWidget {
   }
 
   int recalculatePercentageOfDone(List<TaskModel> tasks) {
-    if (tasks.length == 0) {
+    if (tasks == null || tasks.length == 0) {
       return 0;
     }
+
     final numberOfTasks = tasks.length;
-    final numberOfDone =
-        tasks.where((element) => element.isDone).length;
+    final numberOfDone = tasks.where((element) => element.isDone).length;
 
     return numberOfTasks == 0 ? 0 : numberOfDone * 100 ~/ numberOfTasks;
   }
@@ -89,19 +94,17 @@ class TodoListScreen extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Consumer<TasksProvider>(
-                builder: (ctx, tasksProvider, a) {
-
+                builder: (ctx, tasksProvider, _) {
                   return _buildTaskList(tasksProvider.tasks, context);
                 },
               ),
             ),
           ),
-          Consumer<TasksProvider>(
-              builder: (ctx, tasksProvider, _) {
-                return TaskProgressBar(
-                  recalculatePercentageOfDone(tasksProvider.tasks),
-                );
-              }),
+          Consumer<TasksProvider>(builder: (ctx, tasksProvider, _) {
+            return TaskProgressBar(
+              recalculatePercentageOfDone(tasksProvider.tasks),
+            );
+          }),
         ],
       ),
     );
