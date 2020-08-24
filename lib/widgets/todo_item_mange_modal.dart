@@ -195,7 +195,7 @@ class _MangeTodoItemModalState extends State<MangeTodoItemModal> {
             ),
             CircularRaisedButton(
               label: _isEditMode ? "Edit" : "Save",
-              backgroundColor: Color.fromARGB(255, 0, 255, 194),
+              backgroundColor: Colors.white70,
               onPressed: () => {
                 if (_formKey.currentState.validate())
                   {_isEditMode ? _editTodoItem() : _addTodoItem()}

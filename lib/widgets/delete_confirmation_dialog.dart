@@ -42,7 +42,7 @@ Future<bool> showConfirmationDialog({BuildContext buildContext, String title, po
                       Expanded(
                         child: CircularRaisedButton(
                           label: 'No',
-                          backgroundColor: Color.fromARGB(255, 0, 255, 194),
+                          backgroundColor: Colors.white70,
                           onPressed: negativeButtonCallback,
                         ),
                       ),
