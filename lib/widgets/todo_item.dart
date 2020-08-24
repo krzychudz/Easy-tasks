@@ -113,22 +113,27 @@ class TodoItem extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Container(
-                width: 150,
-                child: Text(
-                  todoTitle,
-                  style: TextStyle(
-                    color: Theme.of(context).accentColor,
-                    fontWeight: FontWeight.w600,
-                    fontSize: 16,
+              Expanded(
+                child: Container(
+                  child: Text(
+                    todoTitle,
+                    style: TextStyle(
+                      color: Theme.of(context).accentColor,
+                      fontWeight: FontWeight.w600,
+                      fontSize: 14,
+                    ),
                   ),
                 ),
+              ),
+              SizedBox(
+                width: 10,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Icon(
                     Icons.timer,
+                    size: 18,
                   ),
                   SizedBox(
                     width: 6,
@@ -136,19 +141,30 @@ class TodoItem extends StatelessWidget {
                   Text('$workingTime min'),
                 ],
               ),
+              SizedBox(
+                width: 16,
+              ),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  IconButton(
-                    icon: Icon(
+                  InkWell(
+                    child: Icon(
                       !isDone ? Icons.done : Icons.close,
+                      color: Theme.of(context).accentColor,
+                      size: 18,
                     ),
-                    color: Theme.of(context).accentColor,
-                    onPressed: () => showConfirmationDialog(context),
+                    onTap: () => showConfirmationDialog(context),
                   ),
-                  IconButton(
-                    icon: Icon(Icons.edit),
-                    color: Theme.of(context).accentColor,
-                    onPressed: () => showEditBottomSheet(context),
+                  SizedBox(
+                    width: 8,
+                  ),
+                  InkWell(
+                    child: Icon(
+                      Icons.edit,
+                      color: Theme.of(context).accentColor,
+                      size: 18,
+                    ),
+                    onTap: () => showEditBottomSheet(context),
                   )
                 ],
               ),
