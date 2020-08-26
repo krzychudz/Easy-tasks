@@ -107,7 +107,7 @@ class TodoItem extends StatelessWidget {
         elevation: 6,
         child: Padding(
           padding: const EdgeInsets.symmetric(
-            vertical: 8.0,
+            vertical: 16.0,
             horizontal: 16.0,
           ),
           child: Row(

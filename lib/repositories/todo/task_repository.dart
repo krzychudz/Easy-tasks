@@ -10,7 +10,7 @@ class TaskDatabaseRepository implements TaskRepositoryInterface {
   String sqlTableSchema =
       '(id STRING PRIMARY KEY, title TEXT, duration TEXT, isDone INTEGER, alpha INTEGER, red INTEGER, green INTEGER, blue INTEGER)';
 
-  DatabaseInterface _database = SQLliteDatabase(); // TODO inject this!!
+  DatabaseInterface _database = SQLliteDatabase();
 
   TaskDatabaseRepository() {
     initDatabaseTable();

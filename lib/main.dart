@@ -6,32 +6,32 @@ import './screens/todo_list_screen.dart';
 
 void main() {
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (context) => TasksProvider(),
-        )
-      ],
-      child: MyApp(),
-    ),
+    MyApp(),
   );
 }
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Easy tasks',
-      theme: ThemeData(
-          primaryColor: Colors.white,
-          accentColor: Colors.black,
-          visualDensity: VisualDensity.adaptivePlatformDensity,
-          canvasColor: Colors.transparent,
-          fontFamily: 'Roboto'),
-      initialRoute: '/',
-      routes: {
-        '/': (ctx) => TodoListScreen(),
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (context) => TasksProvider(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'Easy tasks',
+        theme: ThemeData(
+            primaryColor: Colors.white,
+            accentColor: Colors.black,
+            visualDensity: VisualDensity.adaptivePlatformDensity,
+            canvasColor: Colors.transparent,
+            fontFamily: 'Roboto'),
+        initialRoute: '/',
+        routes: {
+          '/': (ctx) => TodoListScreen(),
+        },
+      ),
     );
   }
 }
